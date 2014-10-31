@@ -8,10 +8,13 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView.Renderer;
 import android.os.SystemClock;
 
+import com.jradek.aggregat2.util.CheckerBoard;
 import com.jradek.aggregat2.util.Geometry.Point;
 
 public class SceneRenderer implements Renderer {
     private final Context context;
+
+    private CheckerBoard mCheckerBoard;
 
     private Pendulum[] mPendel = null;
     private long lastRenderTime = 0;
@@ -49,6 +52,8 @@ public class SceneRenderer implements Renderer {
             zPos -= 0.2f;
             colorFade -= 0.02f;
         }
+
+        mCheckerBoard = new CheckerBoard(10, 1.0f);
     }
 
     @Override
@@ -81,6 +86,8 @@ public class SceneRenderer implements Renderer {
             mPendel[i].updateSimulation2(deltaT);
             mPendel[i].draw(mCamera.getVPMatrix(), fourMatrizes);
         }
+
+        mCheckerBoard.draw(mCamera.getVPMatrix());
     }
 
     public void setCameraYAxisRotationDegree(float value) {
